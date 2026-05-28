@@ -2937,7 +2937,7 @@
   // ── Rows ocultos temporalmente — restaurar cuando el usuario lo pida ──
   const _CASES_HIDDEN = [
     // ── urgencia=1: Vence hoy ──
-    {id:'R003',urgencia:1,full:false,tipif:'faltan-accesorios',    tipifLabel:'Faltan accesorios',    tipo:'mediacion', estado:'Respuesta a tu reclamo',              logistica:'colecta',         prod:2,read:false},
+    {id:'R003',urgencia:1,full:false,tipif:'faltan-accesorios',    tipifLabel:'Faltan accesorios',    tipo:'mediacion', estado:'Respuesta a tu reclamo',              logistica:'colecta',         prod:2,read:false, buyerName:'Ana Pérez'},
     {id:'R004',urgencia:1,full:true, tipif:'arrepentimiento',      tipifLabel:'Arrepentimiento',      tipo:'reclamo',   estado:'Reclamo por solucionar',              logistica:'full',            prod:3,read:false},
     {id:'R005',urgencia:1,full:false,tipif:'cancelacion',          tipifLabel:'Pedido de cancelación',          tipo:'mediacion', estado:'Respuesta a tu reclamo',              logistica:'flex',            prod:4,read:false},
     {id:'R006',urgencia:1,full:false,tipif:'faltan-accesorios',    tipifLabel:'Faltan accesorios',    tipo:'reclamo',   estado:'Reclamo por solucionar',              logistica:'puntos-despacho', prod:0,read:false},
@@ -3031,7 +3031,7 @@
   ];
 
   const CASES_DATA = [
-    {id:'T002',urgencia:1,full:false,tipif:'no-funciona',      tipifLabel:'No funciona',          tipo:'reclamo', estado:'Reclamo por solucionar', logistica:'correo',          prod:1, read:false, testCase:'t2'},
+    {id:'T002',urgencia:1,full:false,tipif:'no-funciona',      tipifLabel:'No funciona',          tipo:'reclamo', estado:'Reclamo por solucionar', logistica:'correo',          prod:1, read:false, testCase:'t2', buyerName:'Ana Pérez'},
     {id:'T004',urgencia:2,full:false,tipif:'esta-danado',      tipifLabel:'Está dañado',          tipo:'reclamo', estado:'Devolución para revisar', logistica:'correo',         prod:0, read:false, testCase:'t4'},
     // ── Filler: Vence hoy ──
     {id:'F001',urgencia:1,full:false,tipif:'esta-danado',      tipifLabel:'Está dañado',          tipo:'reclamo', estado:'Reclamo por solucionar', logistica:'flex',            prod:2, read:false, filler:true},
