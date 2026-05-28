@@ -573,7 +573,7 @@
       padding: 0; height: auto;
     }
     .vence-pill.outcome {
-      /* Resultado positivo: "Você conservou o dinheiro" */
+      /* Resultado positivo: "Você manteve o dinheiro" */
       background: #E8F5E9; color: #00A050;
     }
 
@@ -2269,7 +2269,7 @@
       </div>
 
     <div class="filter-modal__footer">
-      <button class="btn-primary" id="filterCountBtn" onclick="applyFilters(); closeFilterModal()">Mostrar 10 casos</button>
+      <button class="btn-primary" id="filterCountBtn" onclick="applyFilters(); closeFilterModal()">Mostrar casos</button>
       <button class="btn-text-link" onclick="clearFilters()">Limpar filtros</button>
     </div>
   </div>
@@ -2390,7 +2390,7 @@
     </div>
 
     <div class="filter-modal__footer">
-      <button class="btn-primary" onclick="closeFilterModalCerrados()">Mostrar {N} casos</button>
+      <button class="btn-primary" onclick="closeFilterModalCerrados()">Mostrar casos</button>
       <button class="btn-text-link" onclick="clearFiltersCerrados()">Limpar filtros</button>
     </div>
   </div>
@@ -2783,7 +2783,7 @@
               <span class="canvas-header__total-label">Total recebido:</span>
               <span class="canvas-header__total" id="canvasTotal">R$ 1.299</span>
             </div>
-            <div class="canvas-header__total-note">(inclui comissões, envios e impostos)</div>
+            <div class="canvas-header__total-note">(inclui tarifas, envios e impostos)</div>
             <a class="canvas-header__cobro" onclick="openDrawer()">Ver detalhes do pagamento</a>
           </div>
         </div>
@@ -2914,6 +2914,21 @@
     _wireOnboarding();
   }
   window.addEventListener('load', _wireOnboarding);
+
+  // ── NOMES DE COMPRADORES ──────────────────────────────────────
+  const BUYER_NAMES = [
+    'Ana Souza','Carlos Ferreira','Mariana Lima','Pedro Alves','Juliana Costa',
+    'Rafael Santos','Beatriz Oliveira','Thiago Pereira','Camila Rodrigues','Lucas Barbosa',
+    'Fernanda Gomes','Mateus Carvalho','Larissa Martins','Bruno Ribeiro','Isabela Araújo',
+    'Gustavo Nunes','Letícia Moreira','Felipe Mendes','Priscila Castro','Eduardo Vieira',
+    'Amanda Teixeira','Rodrigo Monteiro','Natália Cunha','Diego Lopes','Vanessa Ramos',
+  ];
+  function buyerForCase(c) {
+    if (c.buyerName) return c.buyerName;
+    let h = 2166136261;
+    for (let i = 0; i < c.id.length; i++) h = Math.imul(h ^ c.id.charCodeAt(i), 16777619) >>> 0;
+    return BUYER_NAMES[h % BUYER_NAMES.length];
+  }
 
   // ── DATOS DE PRODUCTOS ─────────────────────────────────────────
   const PRODUCTS = [
@@ -3167,12 +3182,12 @@
   ];
 
   const CASES_CLOSED = [
-    {id:'C001',full:true, tipif:'esta-danado', tipifLabel:'Está danificado',  tipo:'reclamo', estado:'Resolvemos com reembolso total',                     prod:5, read:false, fechaCierre:'há 2 dias', outcome:'Você conservou o dinheiro', outcomeType:'outcome', cerrado:true, logistica:'full', resolver:'asistente'},
+    {id:'C001',full:true, tipif:'esta-danado', tipifLabel:'Está danificado',  tipo:'reclamo', estado:'Resolvemos com reembolso total',                     prod:5, read:false, fechaCierre:'há 2 dias', outcome:'Você manteve o dinheiro', outcomeType:'outcome', cerrado:true, logistica:'full', resolver:'asistente'},
     {id:'C002',full:true, tipif:'no-funciona', tipifLabel:'Não funciona',  tipo:'reclamo', estado:'Resolvemos com uma devolução. Produto à venda', prod:6, read:false, cerrado:true, logistica:'full', resolver:'asistente-ayuda'},
   ];
   // Generar 88 casos filler para completar 90 en total (rows con texto real, chat skeleton)
   (function() {
-    const O = {outcome:'Você conservou o dinheiro', outcomeType:'outcome'};
+    const O = {outcome:'Você manteve o dinheiro', outcomeType:'outcome'};
     const SS = [
       {tipif:'no-funciona',          tipifLabel:'Não funciona',             estado:'Você resolveu com reembolso parcial',               ...O},
       {tipif:'esta-danado',          tipifLabel:'Está danificado',             estado:'Resolvemos com reembolso total',                 ...O},
@@ -4969,7 +4984,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
       const metaEl = document.getElementById('canvasMeta');
       if (metaEl) {
         const tipoLabel = TIPO_LABELS[c.tipo] || 'Caso';
-        const buyerDisplay = c.tipo === 'mensaje' ? c.buyerName : 'Ana Pérez';
+        const buyerDisplay = buyerForCase(c);
         metaEl.textContent = `${buyerDisplay} | ${tipoLabel} #${genClaimNum(c.id)} criado em 18 de maio`;
       }
       // Número de venta
@@ -5591,7 +5606,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
     let count = 0;
     rows.forEach(row => { if (rowMatchesFilters(row)) count++; });
     const btn = document.getElementById('filterCountBtn');
-    if (btn) btn.textContent = `Mostrar ${count} caso${count !== 1 ? 's' : ''}`;
+    if (btn) btn.textContent = 'Mostrar casos';
   }
 
   // ── Helpers para el checkmark SVG (Andes X TagChoice) ─────────────────────
@@ -5847,7 +5862,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
     const filtered = CASES_CLOSED.filter(_matchesCerrado);
     renderClosedCases(filtered);
     const btn = document.querySelector('#filterModalCerrados .btn-primary');
-    if (btn) btn.textContent = `Mostrar ${filtered.length} casos`;
+    if (btn) btn.textContent = 'Mostrar casos';
   }
 
   function clearFiltersCerrados() {
@@ -5856,7 +5871,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
     document.querySelectorAll('#filterModalCerrados .filter-switch').forEach(sw => sw.classList.remove('on'));
     applyFiltersCerrados();
     const btn = document.querySelector('#filterModalCerrados .btn-primary');
-    if (btn) btn.textContent = 'Mostrar {N} casos';
+    if (btn) btn.textContent = 'Mostrar casos';
   }
 
   // ── DRAWER COBRO ──────────────────────────────────────────────
