@@ -2269,7 +2269,7 @@
       </div>
 
     <div class="filter-modal__footer">
-      <button class="btn-primary" id="filterCountBtn" onclick="applyFilters(); closeFilterModal()">Mostrar 10 casos</button>
+      <button class="btn-primary" id="filterCountBtn" onclick="applyFilters(); closeFilterModal()">Mostrar casos</button>
       <button class="btn-text-link" onclick="clearFilters()">Limpiar filtros</button>
     </div>
   </div>
@@ -2390,7 +2390,7 @@
     </div>
 
     <div class="filter-modal__footer">
-      <button class="btn-primary" onclick="closeFilterModalCerrados()">Mostrar {N} casos</button>
+      <button class="btn-primary" onclick="closeFilterModalCerrados()">Mostrar casos</button>
       <button class="btn-text-link" onclick="clearFiltersCerrados()">Limpiar filtros</button>
     </div>
   </div>
@@ -2772,7 +2772,7 @@
               <div class="canvas-header__product" id="canvasProduct">Samsung Galaxy S9 64GB Negro</div>
               <div class="canvas-header__variants">1 unidad - Color: Silver - Capacidad: 256 GB</div>
             </div>
-            <div class="canvas-header__meta" id="canvasMeta">Ana Perez | Reclamo #1234556 creado el 5 feb 2026</div>
+            <div class="canvas-header__meta" id="canvasMeta">Sofía García | Reclamo #1234556 creado el 5 feb 2026</div>
           </div>
         </div>
         <!-- Col derecha: sale info -->
@@ -4846,6 +4846,40 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
   }
 
 
+  // Genera nombre único y consistente para cualquier case id (R, C, F, T, etc.)
+  function getBuyerName(id) {
+    const female   = ['Sofía','Valentina','Camila','Gabriela','Fernanda','Daniela',
+                       'Alejandra','Natalia','Paola','Claudia','Patricia','Laura',
+                       'Karla','Ximena','Verónica','Adriana','Mónica','Beatriz',
+                       'Lucía','Mariana','Sandra','Carmen','Diana','Gloria',
+                       'Lorena','Jimena','Catalina','Silvia','Miriam','Leticia',
+                       'Rebeca','Esperanza','Estela','Yolanda','Consuelo','Irene'];
+    const male     = ['Carlos','Miguel','Jorge','Roberto','Andrés','Fernando',
+                       'Diego','Pablo','Manuel','José','Luis','Ricardo',
+                       'Eduardo','Alejandro','Gustavo','Sergio','Héctor','Mario',
+                       'Iván','Óscar','Raúl','Javier','Rafael','Felipe',
+                       'Alberto','Ernesto','Arturo','Víctor','César','Hugo',
+                       'Rodrigo','Salvador','Antonio','Enrique','Francisco','Rubén',
+                       'Gerardo','Benjamín','Emilio','Samuel'];
+    const surnames = ['García','Hernández','López','Martínez','González','Rodríguez',
+                       'Sánchez','Ramírez','Torres','Flores','Rivera','Morales',
+                       'Cruz','Reyes','Vargas','Jiménez','Castillo','Ortiz',
+                       'Gutiérrez','Mendoza','Vega','Castro','Delgado','Rojas',
+                       'Aguilar','Ríos','Navarro','Campos','Medina','Ramos',
+                       'Herrera','Suárez','Díaz','Núñez','Alvarado','Peralta',
+                       'Montes','Guerrero','Ibáñez','Paredes','Fuentes','Salinas',
+                       'Espinoza','Peña','Acosta','Cabrera','Miranda','Romero',
+                       'Valdez','Cervantes','Ávila','Bravo','Cano','Domínguez',
+                       'Estrada','Franco','Gallegos','Ibarra','Lara','Mejía'];
+    let h1 = 5381, h2 = 0;
+    for (let i = 0; i < id.length; i++) {
+      h1 = (((h1 << 5) + h1) ^ id.charCodeAt(i)) | 0;
+      h2 = ((h2 * 31) + id.charCodeAt(i)) | 0;
+    }
+    const all = [...female, ...male];
+    return all[Math.abs(h1) % all.length] + ' ' + surnames[Math.abs(h2) % surnames.length];
+  }
+
   // 12. Función principal
   function getChatContent(c) {
     // Rutar test cases especiales
@@ -4885,7 +4919,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
       case 'paquete-sin-producto': return buildChatPaqueteSinProducto(pShort, priceStr);
       case 'problema-factura':     return buildChatProblemaFactura(pShort, priceStr);
       case 'faltan-unidades':      return buildChatFaltanUnidades(pShort, priceStr, refund7Str, shippingStr, prodImg);
-      default:                     return buildChatMensaje(c.buyerName || 'Comprador', pShort);
+      default:                     return buildChatMensaje(c.buyerName || getBuyerName(c.id), pShort);
     }
   }
 
@@ -4908,7 +4942,9 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
     chatMessages.scrollTop = 0;
   }
 
+
   // ── SELECCIÓN DE ROW ──────────────────────────────────────────
+
   function selectRow(el, id) {
     document.querySelectorAll('.row.selected').forEach(r => r.classList.remove('selected'));
     el.classList.add('selected', 'read');
@@ -4954,7 +4990,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
       const metaEl = document.getElementById('canvasMeta');
       if (metaEl) {
         const tipoLabel = TIPO_LABELS[c.tipo] || 'Caso';
-        const buyerDisplay = c.tipo === 'mensaje' ? c.buyerName : 'Ana Pérez';
+        const buyerDisplay = c.buyerName || getBuyerName(c.id);
         metaEl.textContent = `${buyerDisplay} | ${tipoLabel} #${genClaimNum(c.id)} creado el 18 de mayo`;
       }
       // Número de venta
@@ -5577,7 +5613,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
     let count = 0;
     rows.forEach(row => { if (rowMatchesFilters(row)) count++; });
     const btn = document.getElementById('filterCountBtn');
-    if (btn) btn.textContent = `Mostrar ${count} caso${count !== 1 ? 's' : ''}`;
+    if (btn) btn.textContent = 'Mostrar casos';
   }
 
   // ── Helpers para el checkmark SVG (Andes X TagChoice) ─────────────────────
@@ -5833,7 +5869,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
     const filtered = CASES_CLOSED.filter(_matchesCerrado);
     renderClosedCases(filtered);
     const btn = document.querySelector('#filterModalCerrados .btn-primary');
-    if (btn) btn.textContent = `Mostrar ${filtered.length} casos`;
+    if (btn) btn.textContent = 'Mostrar casos';
   }
 
   function clearFiltersCerrados() {
@@ -5842,7 +5878,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
     document.querySelectorAll('#filterModalCerrados .filter-switch').forEach(sw => sw.classList.remove('on'));
     applyFiltersCerrados();
     const btn = document.querySelector('#filterModalCerrados .btn-primary');
-    if (btn) btn.textContent = 'Mostrar {N} casos';
+    if (btn) btn.textContent = 'Mostrar casos';
   }
 
   // ── DRAWER COBRO ──────────────────────────────────────────────
