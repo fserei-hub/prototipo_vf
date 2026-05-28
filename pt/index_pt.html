@@ -3046,7 +3046,7 @@
   ];
 
   const CASES_DATA = [
-    {id:'T002',urgencia:1,full:false,tipif:'no-funciona',      tipifLabel:'Não funciona',          tipo:'reclamo', estado:'Reclamação a resolver', logistica:'correo',          prod:1, read:false, testCase:'t2'},
+    {id:'T002',urgencia:1,full:false,tipif:'no-funciona',      tipifLabel:'Não funciona',          tipo:'reclamo', estado:'Reclamação a resolver', logistica:'correo',          prod:1, read:false, testCase:'t2', buyerName:'Ana da Silva'},
     {id:'T004',urgencia:2,full:false,tipif:'esta-danado',      tipifLabel:'Está danificado',          tipo:'reclamo', estado:'Devolução para revisar', logistica:'correo',         prod:0, read:false, testCase:'t4'},
     // ── Filler: Vence hoy ──
     {id:'F001',urgencia:1,full:false,tipif:'esta-danado',      tipifLabel:'Está danificado',          tipo:'reclamo', estado:'Reclamação a resolver', logistica:'flex',            prod:2, read:false, filler:true},
@@ -3882,7 +3882,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
       <div class="chat-join-pill">
         <div class="chat-join-pill__inner">
           ${_PERSON_ICON}
-          <span class="chat-join-pill__text"><span class="chat-join-pill__name">Ana</span> entrou na conversa</span>
+          <span class="chat-join-pill__text"><span class="chat-join-pill__name">Ana da Silva</span> entrou na conversa</span>
         </div>
       </div>
       <div class="chat-bubble chat-bubble--buyer">
@@ -3900,7 +3900,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
       <div class="chat-join-pill">
         <div class="chat-join-pill__inner">
           ${_PERSON_ICON}
-          <span class="chat-join-pill__text"><span class="chat-join-pill__name">Ana</span> entrou na conversa</span>
+          <span class="chat-join-pill__text"><span class="chat-join-pill__name">Ana da Silva</span> entrou na conversa</span>
         </div>
       </div>
       <div class="chat-bubble chat-bubble--buyer">
@@ -3913,7 +3913,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
       <div class="chat-join-pill">
         <div class="chat-join-pill__inner">
           ${_PERSON_ICON}
-          <span class="chat-join-pill__text"><span class="chat-join-pill__name">Ana</span> saiu da conversa</span>
+          <span class="chat-join-pill__text"><span class="chat-join-pill__name">Ana da Silva</span> saiu da conversa</span>
         </div>
       </div>
       <div class="chat-date-divider"><span>18 de maio</span></div>
@@ -3962,11 +3962,11 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
     // Sección reutilizable: chat inicial 15 de mayo
     const _SEC_15MAYO = `
       <div class="chat-date-divider"><span>15 de maio</span></div>
-      <div class="chat-join-pill"><div class="chat-join-pill__inner">${_PERSON_ICON}<span class="chat-join-pill__text"><span class="chat-join-pill__name">Ana</span> entrou na conversa</span></div></div>
+      <div class="chat-join-pill"><div class="chat-join-pill__inner">${_PERSON_ICON}<span class="chat-join-pill__text"><span class="chat-join-pill__name">Ana da Silva</span> entrou na conversa</span></div></div>
       <div class="chat-bubble chat-bubble--buyer"><div class="chat-bubble__text">Olá, gostaria de saber quando chega o produto que comprei.</div></div>
       <div class="chat-bubble chat-bubble--seller"><div class="chat-bubble__text">Olá, como vai? Chegará antes da segunda, conforme indica o Mercado Envios. Obrigado pela sua compra.</div></div>
       <div style="text-align:right;font-size:12px;color:#646587;line-height:16px;margin-top:-12px;margin-bottom:4px;">10:31</div>
-      <div class="chat-join-pill"><div class="chat-join-pill__inner">${_PERSON_ICON}<span class="chat-join-pill__text"><span class="chat-join-pill__name">Ana</span> saiu da conversa</span></div></div>`;
+      <div class="chat-join-pill"><div class="chat-join-pill__inner">${_PERSON_ICON}<span class="chat-join-pill__text"><span class="chat-join-pill__name">Ana da Silva</span> saiu da conversa</span></div></div>`;
 
     // Sección reutilizable: 18 de mayo — asistente + elección vendedor
     const _SEC_18MAYO = `
