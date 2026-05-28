@@ -2269,7 +2269,7 @@
       </div>
 
     <div class="filter-modal__footer">
-      <button class="btn-primary" id="filterCountBtn" onclick="applyFilters(); closeFilterModal()">Mostrar 10 casos</button>
+      <button class="btn-primary" id="filterCountBtn" onclick="applyFilters(); closeFilterModal()">Mostrar casos</button>
       <button class="btn-text-link" onclick="clearFilters()">Limpiar filtros</button>
     </div>
   </div>
@@ -2390,7 +2390,7 @@
     </div>
 
     <div class="filter-modal__footer">
-      <button class="btn-primary" onclick="closeFilterModalCerrados()">Mostrar {N} casos</button>
+      <button class="btn-primary" onclick="closeFilterModalCerrados()">Mostrar casos</button>
       <button class="btn-text-link" onclick="clearFiltersCerrados()">Limpiar filtros</button>
     </div>
   </div>
@@ -4955,7 +4955,19 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
       const metaEl = document.getElementById('canvasMeta');
       if (metaEl) {
         const tipoLabel = TIPO_LABELS[c.tipo] || 'Caso';
-        const buyerDisplay = c.tipo === 'mensaje' ? c.buyerName : 'Ana Pérez';
+        const BUYER_NAMES = [
+          'Sofía Ramírez', 'Martín González', 'Lucía Fernández', 'Diego Morales',
+          'Valentina López', 'Tomás Sánchez', 'Camila Torres', 'Nicolás Rodríguez',
+          'Julieta Méndez', 'Agustín Herrera', 'Florencia Gómez', 'Santiago Díaz',
+          'Micaela Ríos', 'Ezequiel Castro', 'Rocío Álvarez', 'Facundo Ortega',
+          'Abril Vargas', 'Matías Romero', 'Natalia Suárez', 'Gonzalo Pereyra'
+        ];
+        function getBuyerName(id) {
+          let h = 0;
+          for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+          return BUYER_NAMES[h % BUYER_NAMES.length];
+        }
+        const buyerDisplay = c.tipo === 'mensaje' ? c.buyerName : getBuyerName(c.id);
         metaEl.textContent = `${buyerDisplay} | ${tipoLabel} #${genClaimNum(c.id)} creado el 18 de mayo`;
       }
       // Número de venta
@@ -5578,7 +5590,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
     let count = 0;
     rows.forEach(row => { if (rowMatchesFilters(row)) count++; });
     const btn = document.getElementById('filterCountBtn');
-    if (btn) btn.textContent = `Mostrar ${count} caso${count !== 1 ? 's' : ''}`;
+    if (btn) btn.textContent = 'Mostrar casos';
   }
 
   // ── Helpers para el checkmark SVG (Andes X TagChoice) ─────────────────────
@@ -5834,7 +5846,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
     const filtered = CASES_CLOSED.filter(_matchesCerrado);
     renderClosedCases(filtered);
     const btn = document.querySelector('#filterModalCerrados .btn-primary');
-    if (btn) btn.textContent = `Mostrar ${filtered.length} casos`;
+    if (btn) btn.textContent = 'Mostrar casos';
   }
 
   function clearFiltersCerrados() {
@@ -5843,7 +5855,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
     document.querySelectorAll('#filterModalCerrados .filter-switch').forEach(sw => sw.classList.remove('on'));
     applyFiltersCerrados();
     const btn = document.querySelector('#filterModalCerrados .btn-primary');
-    if (btn) btn.textContent = 'Mostrar {N} casos';
+    if (btn) btn.textContent = 'Mostrar casos';
   }
 
   // ── DRAWER COBRO ──────────────────────────────────────────────
