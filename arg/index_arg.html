@@ -4963,6 +4963,7 @@ if (document.getElementById('chatFinalizadoBar'))  document.getElementById('chat
           'Abril Vargas', 'Matías Romero', 'Natalia Suárez', 'Gonzalo Pereyra'
         ];
         function getBuyerName(id) {
+          if (id === 'T002') return 'Ana Pérez';
           let h = 0;
           for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
           return BUYER_NAMES[h % BUYER_NAMES.length];
